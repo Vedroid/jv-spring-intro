@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n}{FATAL=Bright Red, ERROR=Red, WARN=Yellow, INFO=Normal, DEBUG=Cyan, TRACE=Blue}"
+                    disableAnsi="false"/>
+        </Console>
+
+        <Console name="DaoConsole" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level DAO: - %msg%n}{FATAL=Bright Red, ERROR=Red, WARN=Yellow, INFO=Normal, DEBUG=Cyan, TRACE=Blue}"
+                    disableAnsi="false"/>
+        </Console>
+
+        <Console name="HibernateConsole" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level Hibernate: - %msg%n}{FATAL=Bright Red, ERROR=Red, WARN=Yellow, INFO=Normal, DEBUG=Cyan, TRACE=Blue}"
+                    disableAnsi="false"/>
+        </Console>
+
+        <File name="HibernateFile" fileName="hibernate.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.hibernate" level="WARN" additivity="false">
+            <AppenderRef ref="HibernateConsole"/>
+            <AppenderRef ref="HibernateFile"/>
+        </Logger>
+
+        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+            <AppenderRef ref="HibernateConsole"/>
+        </Logger>
+
+        <Logger name="ua.vedroid.spring.dao" level="ALL" additivity="false">
+            <AppenderRef ref="DaoConsole"/>
+        </Logger>
+
+        <Logger name="ua.vedroid.spring.Main" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
