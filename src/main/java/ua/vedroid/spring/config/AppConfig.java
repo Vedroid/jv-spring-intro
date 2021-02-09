@@ -32,7 +32,7 @@ public class AppConfig {
         sessionFactoryBean.setDataSource(getDataSource());
         Properties properties = new Properties();
         properties.put("hibernate.hbm2ddl.auto", "create-drop");
-        //sessionFactoryBean.setHibernateProperties(properties);
+        sessionFactoryBean.setHibernateProperties(properties);
         sessionFactoryBean.setAnnotatedClasses(User.class);
         return sessionFactoryBean;
     }
