@@ -19,21 +19,21 @@ import ua.vedroid.spring.model.User;
         "ua.vedroid.spring.dao"
 })
 public class AppConfig {
-    private final Environment env;
+    private final Environment environment;
 
     @Autowired
     public AppConfig(Environment environment) {
-        this.env = environment;
+        this.environment = environment;
     }
 
     @Bean
     public DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getProperty("db.driver"));
-        dataSource.setUrl(env.getProperty("db.url"));
-        dataSource.setDefaultSchema(env.getProperty("db.defaultSchema"));
-        dataSource.setUsername(env.getProperty("db.username"));
-        dataSource.setPassword(env.getProperty("db.password"));
+        dataSource.setDriverClassName(environment.getProperty("db.driver"));
+        dataSource.setUrl(environment.getProperty("db.url"));
+        dataSource.setDefaultSchema(environment.getProperty("db.defaultSchema"));
+        dataSource.setUsername(environment.getProperty("db.username"));
+        dataSource.setPassword(environment.getProperty("db.password"));
         return dataSource;
     }
 
@@ -42,8 +42,8 @@ public class AppConfig {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(getDataSource());
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
         sessionFactoryBean.setHibernateProperties(properties);
         sessionFactoryBean.setAnnotatedClasses(User.class);
         return sessionFactoryBean;
