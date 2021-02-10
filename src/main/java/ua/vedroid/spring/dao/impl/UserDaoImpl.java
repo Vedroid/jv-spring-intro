@@ -1,6 +1,7 @@
 package ua.vedroid.spring.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -46,11 +47,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<User> get(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(User.class, userId));
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving user with id=" + userId, e);
+        }
+    }
+
+    @Override
     public List<User> listUsers() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from User", User.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all CinemaHall", e);
+            throw new DataProcessingException("Error retrieving all users", e);
         }
     }
 }
